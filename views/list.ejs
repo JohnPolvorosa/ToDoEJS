@@ -9,13 +9,10 @@
 </head>
 <body>
     <h1> <%= kindOfDay %> </h1>
-    <% for (i=0; i < newList.length; i++) { %>
-        <ul> <%= newList[i] %> </ul>
-    <% } %>
 
     <ul>
-        <% for (i=0; i < newItem.length; i++) { %>
-            <li><%= newItem[i] %></li>
+        <% for (i=0; i < newItems.length; i++) { %>
+            <li><%= newItems[i] %></li>
         <% } %>
     </ul>
     
@@ -27,10 +24,10 @@
 
     </form>
 
-    <form action="newList" method="POST">
+    <!-- <form action="newList" method="POST">
         <input type="text" name="listName" placeholder="Enter your list name here">
         <button type="submit">New List</button>
-    </form>
+    </form> -->
     
 </body>
 </html>
