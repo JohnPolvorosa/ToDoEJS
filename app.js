@@ -27,7 +27,7 @@ app.get("/", function(req,res) {
     
     let day = today.toLocaleDateString("en-US", options);
     // EJS@@@ render from ejs file to frontpage
-    res.render('list', { kindOfDay: day, newItem: tasks, newList: lists });
+    res.render('list', { kindOfDay: day, newItems: tasks });
 
     // res.render('moreList', { newList: lists });
 });
