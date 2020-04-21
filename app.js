@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
 
 app.set('view engine', 'ejs');
 
@@ -15,9 +16,11 @@ app.listen(3000, function() {
 let today = new Date();
 let currentDay = today.getDay();
 let tasks = [];
-let lists = [];
+let workItems = [];
 
 app.get("/", function(req,res) {
+
+
 
     let options = {
         weekday: 'long',
@@ -27,41 +30,33 @@ app.get("/", function(req,res) {
     
     let day = today.toLocaleDateString("en-US", options);
     // EJS@@@ render from ejs file to frontpage
-    res.render('list', { kindOfDay: day, newItem: tasks, newList: lists });
-
-    // res.render('moreList', { newList: lists });
+    res.render("list", {listTitle: day, newListItems: tasks });
 });
 //  Grab user input (post route)
 app.post("/", function(req, res) {
-    let task = req.body.taskName;
-    console.log("Adding item: " + task);
+    let task = req.body.newItem;
 
-    tasks.push(task);
-
-    res.redirect("/");
+    if (req.body.list === "Work") {
+        workItems.push(task);
+        console.log("Adding item: " + task);
+        res.redirect("work");
+    } else {
+        tasks.push(task);
+        console.log("Adding item: " + task);
+        res.redirect("/");
+    }
 });
 
-
-//
-app.post("/newList", function(req, res) {
-    let listName = req.body.listName;
-    lists.push(listName);
-    res.redirect("/");
+app.get("/work", function(req, res) {
+    res.render("list", {listTitle: "Work List", newListItems: workItems });
 });
 
+app.post("/work", function(req,res) {
+    let item = req.body.newItem;
+    workItems.push(item);
+    res.redirect("/work");
+});
 
-
-
-
-
-
-
-
-
-
-
-// <% if (kindOfDay === "Saturday" || kindOfDay === "Sunday") { %>
-//     <h1 class="weekend">It's a <%= kindOfDay %> List </h1>
-// <% } else { %>
-//     <h1 style="color: purple" class="weekday">It's a <%= kindOfDay %> List </h1>
-// <% } %>
+app.get("/about", function(req,res) {
+    res.render("about");
+});

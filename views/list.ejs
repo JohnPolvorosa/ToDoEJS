@@ -1,36 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do List</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-
-</head>
-<body>
-    <h1> <%= kindOfDay %> </h1>
-    <% for (i=0; i < newList.length; i++) { %>
-        <ul> <%= newList[i] %> </ul>
-    <% } %>
-
-    <ul>
-        <% for (i=0; i < newItem.length; i++) { %>
-            <li><%= newItem[i] %></li>
+<%- include("header") -%> 
+    <div class="box" id="heading">
+        <h1> <%= listTitle %> </h1>
+    </div>
+    <div class="box">
+        <% for (i=0; i < newListItems.length; i++) { %>
+            <div class="item">
+                <input type="checkbox">
+                <p><%= newListItems[i] %></p>
+            </div>
         <% } %>
-    </ul>
+        <form action="/" method="POST"> 
+            <input type="text" name="newItem" placeholder="Enter your task here" autocomplete="off">
+            <button type="submit" name="list" value=<%= listTitle %>>+</button>
+        </form>
+    </div>
+
     
+<%- include("footer") %> 
 
-    <form action="/" method="POST"> 
-        
-        <input type="text" name="taskName" placeholder="Enter your task here">
-        <input type="submit" name="btnSubmit" value="Add">
 
-    </form>
-
-    <form action="newList" method="POST">
-        <input type="text" name="listName" placeholder="Enter your list name here">
-        <button type="submit">New List</button>
-    </form>
-    
-</body>
-</html>
