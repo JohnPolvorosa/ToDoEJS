@@ -2,6 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+let date = require(__dirname + "/date.js");
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -13,22 +14,13 @@ app.listen(3000, function() {
     console.log("Server started on port 3000");
 });
 
-let today = new Date();
-let currentDay = today.getDay();
+
 let tasks = [];
 let workItems = [];
 
 app.get("/", function(req,res) {
 
-
-
-    let options = {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
-    };
-    
-    let day = today.toLocaleDateString("en-US", options);
+    let day = date.getDate();
     // EJS@@@ render from ejs file to frontpage
     res.render("list", {listTitle: day, newListItems: tasks });
 });
